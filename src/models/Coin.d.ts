@@ -21,10 +21,10 @@ declare interface Coin {
 	king_of_the_hill_timestamp: number;
 	market_cap: number;
 	reply_count: number;
+	last_reply: number;
 	nsfw: boolean;
 	market_id: string | null;
 	usd_market_cap: number;
-	last_reply: number;
 }
 
 declare interface KingOfTheHill extends Coin {
@@ -34,4 +34,15 @@ declare interface KingOfTheHill extends Coin {
 	username: string | null;
 	profile_image: string | null;
 	last_reply: never;
+}
+
+declare interface LatestCoin extends Coin {
+	hidden: string | null;
+	last_trade_timestamp: number | null;
+	real_sol_reserves: number;
+	real_token_reserves: number;
+	livestream_ban_expiry: number;
+	is_banned: boolean;
+	initialized: boolean;
+	updated_at: number;
 }
