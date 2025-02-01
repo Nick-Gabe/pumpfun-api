@@ -2,20 +2,26 @@
 	"name": "pumpfun-api",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"main": "dist/index.js",
+	"type": "module",
 	"scripts": {
+		"build": "tsc && tsc-alias",
 		"format": "pnpm biome format --write src/**/*",
 		"lint": "pnpm biome lint --write src/**/*",
-		"start": "tsnd --respawn -r tsconfig-paths/register src/index.ts",
+		"dev": "nodemon",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
-		"typescript": "^5.7.3",
 		"@biomejs/biome": "^1.9.4",
-		"ts-node": "^10.9.2",
-		"tsconfig-paths": "^4.2.0"
+		"@types/node": "^22.13.0",
+		"nodemon": "^3.1.9",
+		"tsc-alias": "^1.8.10",
+		"typescript": "^5.7.3"
+	},
+	"dependencies": {
+		"ky": "^1.7.4"
 	}
 }
