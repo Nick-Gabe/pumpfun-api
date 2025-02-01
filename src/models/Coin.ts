@@ -27,13 +27,12 @@ export interface Coin {
 	usd_market_cap: number;
 }
 
-export interface KingOfTheHill extends Coin {
+export interface KingOfTheHill extends Omit<Coin, "last_reply"> {
 	video_uri: string | null;
 	inverted: string | null;
 	is_currently_live: boolean;
 	username: string | null;
 	profile_image: string | null;
-	last_reply: never;
 }
 
 export interface LatestCoin extends Coin {

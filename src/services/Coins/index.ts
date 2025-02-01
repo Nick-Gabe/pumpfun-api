@@ -18,7 +18,7 @@ export default class CoinsService {
 		const response = await ky.get(`${this.url}/king-of-the-hill`, {
 			searchParams,
 		});
-		return response.json<KingOfTheHill>();
+		return response.json();
 	};
 
 	/**
@@ -28,14 +28,14 @@ export default class CoinsService {
 		const response = await ky.get(`${this.url}/${mint}`, {
 			searchParams,
 		});
-		return response.json<Coin>();
+		return response.json();
 	};
 
 	getCoins: GetCoinsMethod = async (searchParams) => {
 		const response = await ky.get(`${this.url}`, {
 			searchParams,
 		});
-		return response.json<Coin[]>();
+		return response.json();
 	};
 
 	/**
@@ -45,18 +45,18 @@ export default class CoinsService {
 		const response = await ky.get(`${this.url}/user-created-coins/${creator}`, {
 			searchParams,
 		});
-		return response.json<Coin[]>();
+		return response.json();
 	};
 
 	getLatestCoin: GetLatestCoinMethod = async () => {
 		const response = await ky.get(`${this.url}/latest`);
-		return response.json<LatestCoin>();
+		return response.json();
 	};
 
 	getSimilarCoins: GetSimilarCoinsMethod = async (searchParams) => {
 		const response = await ky.get(`${this.url}/similar`, {
 			searchParams,
 		});
-		return response.json<Coin[]>();
+		return response.json();
 	};
 }
