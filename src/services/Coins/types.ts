@@ -1,15 +1,19 @@
-declare type KingOfTheHillMethod = (searchParams?: {
+type Coin = import("models/Coin").Coin;
+type KingOfTheHill = import("models/Coin").KingOfTheHill;
+type LatestCoin = import("models/Coin").LatestCoin;
+
+export type KingOfTheHillMethod = (searchParams?: {
 	includeNsfw?: boolean;
 }) => Promise<KingOfTheHill>;
 
-declare type GetCoinMethod = (
+export type GetCoinMethod = (
 	mint: string,
 	searchParams?: {
 		sync?: boolean;
 	},
 ) => Promise<Coin>;
 
-declare type GetCoinsMethod = (searchParams: {
+export type GetCoinsMethod = (searchParams: {
 	/**
 	 * @param limit Limit is the maximum number of coins to return. If not specified it will return Pump.fun's default limit.
 	 */
@@ -28,9 +32,9 @@ declare type GetCoinsMethod = (searchParams: {
 	complete?: boolean;
 }) => Promise<Coin[]>;
 
-declare type GetLatestCoinMethod = () => Promise<LatestCoin>;
+export type GetLatestCoinMethod = () => Promise<LatestCoin>;
 
-declare type GetSimilarCoinsMethod = (searchParams: {
+export type GetSimilarCoinsMethod = (searchParams: {
 	/**
 	 * @param mint Mint is the coin address, usually a string of 32 characters minimum.
 	 */
@@ -39,9 +43,9 @@ declare type GetSimilarCoinsMethod = (searchParams: {
 	 * @param limit Limit is the maximum number of coins to return. If not specified it will return Pump.fun's default limit.
 	 */
 	limit?: number;
-}) => Promise<SimilarCoin[]>;
+}) => Promise<Coin[]>;
 
-declare type GetCoinsByCreator = (
+export type GetCoinsByCreator = (
 	creator: string,
 	searchParams: {
 		/**

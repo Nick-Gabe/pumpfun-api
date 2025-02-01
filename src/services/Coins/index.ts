@@ -1,4 +1,13 @@
 import PumpFun from "@/.";
+import type { Coin, KingOfTheHill, LatestCoin } from "@/models/Coin";
+import type {
+	GetCoinMethod,
+	GetCoinsByCreator,
+	GetCoinsMethod,
+	GetLatestCoinMethod,
+	GetSimilarCoinsMethod,
+	KingOfTheHillMethod,
+} from "@/services/Coins/types";
 import ky from "ky";
 
 export default class CoinsService {

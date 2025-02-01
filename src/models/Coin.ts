@@ -1,4 +1,4 @@
-declare interface Coin {
+export interface Coin {
 	mint: string;
 	name: string;
 	symbol: string;
@@ -27,7 +27,7 @@ declare interface Coin {
 	usd_market_cap: number;
 }
 
-declare interface KingOfTheHill extends Coin {
+export interface KingOfTheHill extends Coin {
 	video_uri: string | null;
 	inverted: string | null;
 	is_currently_live: boolean;
@@ -36,7 +36,7 @@ declare interface KingOfTheHill extends Coin {
 	last_reply: never;
 }
 
-declare interface LatestCoin extends Coin {
+export interface LatestCoin extends Coin {
 	hidden: string | null;
 	last_trade_timestamp: number | null;
 	real_sol_reserves: number;
