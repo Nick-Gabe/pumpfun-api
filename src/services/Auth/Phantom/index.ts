@@ -5,10 +5,11 @@ import bs58 from "bs58";
 import ky from "ky";
 import PumpFun from "@/index";
 
-// biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
+// biome-ignore lint/complexity/noStaticOnlyClass: This service is going to have more methods in the future;
 export default class PhantomService {
 	static async connect() {
 		return await new Promise((resolve, reject) => {
+			// @TODO: Support other browsers;
 			exec(
 				`open -a 'Google Chrome' --args --remote-debugging-port=9222`,
 				async (err) => {
