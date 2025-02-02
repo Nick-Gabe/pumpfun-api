@@ -1,5 +1,4 @@
 import PumpFun from "@/.";
-import type { Coin, KingOfTheHill, LatestCoin } from "@/models/Coin";
 import type {
 	GetCoinMethod,
 	GetCoinsByCreator,
