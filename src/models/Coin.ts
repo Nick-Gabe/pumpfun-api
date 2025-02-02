@@ -45,3 +45,16 @@ export interface LatestCoin extends Coin {
 	initialized: boolean;
 	updated_at: number;
 }
+
+export interface CoinCandlestick {
+	mint: string;
+	timestamp: number;
+	open: number;
+	high: number;
+	low: number;
+	close: number;
+	volume: number;
+	slot: number;
+	is_5_min: boolean;
+	is_1_min: boolean;
+}

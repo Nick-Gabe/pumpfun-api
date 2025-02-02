@@ -1,6 +1,7 @@
 type Coin = import("models/Coin").Coin;
 type KingOfTheHill = import("models/Coin").KingOfTheHill;
 type LatestCoin = import("models/Coin").LatestCoin;
+type CoinCandlestick = import("models/Coin").CoinCandlestick;
 
 export type KingOfTheHillMethod = (searchParams?: {
 	includeNsfw?: boolean;
@@ -58,3 +59,21 @@ export type GetCoinsByCreator = (
 		offset: number;
 	},
 ) => Promise<Coin[]>;
+
+export type GetCoinCandlesticksMethod = (
+	/**
+	 * @param mint Mint is the coin address, usually a string of 32 characters minimum.
+	 */
+	mint: string,
+	searchParams?: {
+		/**
+		 * @param limit Limit is the maximum number of candles to return. If not specified it will return Pump.fun's default limit.
+		 */
+		limit?: number;
+		/**
+		 * @param offset Offset is the number of candles to skip before returning the result.
+		 */
+		offset?: number;
+		timeframe?: number;
+	},
+) => Promise<CoinCandlestick[]>;

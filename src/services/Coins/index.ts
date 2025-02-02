@@ -1,5 +1,6 @@
 import PumpFun from "@/.";
 import type {
+	GetCoinCandlesticksMethod,
 	GetCoinMethod,
 	GetCoinsByCreator,
 	GetCoinsMethod,
@@ -56,6 +57,22 @@ export default class CoinsService {
 		const response = await ky.get(`${this.url}/similar`, {
 			searchParams,
 		});
+		return response.json();
+	};
+
+	/**
+	 * @param mint Mint is the coin address, usually a string of 32 characters minimum.
+	 */
+	getCoinCandlesticks: GetCoinCandlesticksMethod = async (
+		mint,
+		searchParams,
+	) => {
+		const response = await ky.get(
+			`${PumpFun.baseApiUrl}/candlesticks/${mint}`,
+			{
+				searchParams,
+			},
+		);
 		return response.json();
 	};
 }
