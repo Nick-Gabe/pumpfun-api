@@ -19,4 +19,9 @@ export default class PumpFun {
 		const response = await ky.get(`${PumpFun.baseApiUrl}/health`);
 		return response.json() as Promise<{ status: string }>;
 	}
+
+	async solPrice() {
+		const response = await ky.get(`${PumpFun.baseApiUrl}/sol-price`);
+		return response.json() as Promise<{ solPrice: number }>;
+	}
 }
