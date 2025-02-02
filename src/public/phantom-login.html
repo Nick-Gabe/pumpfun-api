@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phantom Login</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="https://phantom.com/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://phantom.com/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://phantom.com/favicon/favicon-16x16.png">
+  <style>
+    :root {
+      --blue: #8ca8e5;
+      --red: #e58c8c;
+    }
+    body {
+      background-color: #181818;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      overflow: hidden;
+    }
+    main {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    h1 {
+      color: white;
+    }
+    button {
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: #fafafa;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    button:hover {
+      cursor: pointer;
+      background-color: var(--blue);
+      transform: scale(1.05);
+    }
+    .blue {
+      color: var(--blue);
+    }
+    .error {
+      background-color: var(--red);
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+    .hidden {
+      display: none;
+    }
+    footer {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      bottom: 0;
+      color: white;
+      padding-bottom: 15px;
+    }
+    footer > p {
+      margin: 0px;
+      padding: 0px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Connect your <span class="blue">wallet</span> to continue...</h1>
+    <button id="connect" onclick="connectAndSign()">Connect Phantom Wallet</button>
+    <p id="error" class="error hidden"></p>
+    <footer>
+      <p>This website is not affiliated with Phantom or Pump.fun.</p>
+      <p>It solely utilizes Phantom for signing in and Pump.fun for authentication purposes.</p>
+    </footer>
+  </main>
+  <script>
+    const errorElement = document.getElementById('error');
+    const connectPhantomWallet = async () => {
+      errorElement.classList.add('hidden');
+      if (window.solana && window.solana.isPhantom) {
+        try {
+          const response = await window.solana.connect();
+          console.log('Connected with public key:', response.publicKey.toString());
+          return response.publicKey.toString();
+        } catch (err) {
+          console.error('Failed to connect to Phantom wallet:', err);
+          errorElement.textContent = 'Failed to connect to Phantom wallet, please try again.';
+          errorElement.classList.remove('hidden');
+        }
+      } else {
+        console.error('Phantom wallet not found');
+        errorElement.textContent = 'Phantom wallet not found. Please install Phantom wallet and try again.';
+        errorElement.classList.remove('hidden');
+      }
+    };
+    const signMessage = async () => {
+      if (window.solana) {
+        try {
+          const timestamp = Date.now();
+          // This message is like this because it needs to match the original pump.fun
+          // message in order for the signature to be considered valid by their backend.
+          const message = 'Sign in to pump.fun: ' + timestamp;
+          const encodedMessage = new TextEncoder().encode(message);
+          const { signature } = await window.solana.signMessage(encodedMessage);
+          return { signature, timestamp };
+        } catch (err) {
+          console.error('Failed to sign message:', err);
+          errorElement.textContent = 'Failed to connect to Phantom wallet, please try again.';
+          errorElement.classList.remove('hidden');
+        }
+      }
+    };
+    const connectAndSign = async () => {
+      const address = await connectPhantomWallet();
+      const signDetails = await signMessage();
+      const result = {
+        address,
+        ...signDetails,
+      }
+      return result;
+    };
+
+    window.connectAndSign = connectAndSign;
+  </script>
+</body>
+</html>

@@ -1,6 +1,8 @@
+import PhantomService from "@/services/Auth/Phantom";
 import CoinsService from "@/services/Coins";
 import RepliesService from "@/services/Replies";
 import UsersService from "@/services/Users";
+import type { AuthenticationMethods } from "@/types";
 import ky from "ky";
 
 export default class PumpFun {
@@ -13,6 +15,13 @@ export default class PumpFun {
 		this.coins = new CoinsService();
 		this.replies = new RepliesService();
 		this.users = new UsersService();
+	}
+
+	async authenticate(via: AuthenticationMethods) {
+		switch (via) {
+			case "phantom":
+				return await PhantomService.connect();
+		}
 	}
 
 	async health() {

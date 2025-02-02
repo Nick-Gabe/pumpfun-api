@@ -6,12 +6,17 @@
 	"types": "dist/index.d.ts",
 	"type": "module",
 	"scripts": {
-		"build": "tsc && tsc-alias",
+		"dev": "nodemon",
+		"build": "tsc && tsc-alias && npm run copy-files",
 		"format": "pnpm biome format --write src/**/*",
 		"lint": "pnpm biome lint --write src/**/*",
-		"dev": "nodemon",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"copy-files": "cp -r src/public dist"
 	},
+	"engines": {
+		"node": ">=20.11"
+	},
+	"packageManager": "pnpm@8.14.1",
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
@@ -23,6 +28,8 @@
 		"typescript": "^5.7.3"
 	},
 	"dependencies": {
-		"ky": "^1.7.4"
+		"bs58": "^6.0.0",
+		"ky": "^1.7.4",
+		"puppeteer-core": "^24.1.1"
 	}
 }

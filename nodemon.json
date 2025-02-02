@@ -1,5 +1,8 @@
 {
-  "watch": ["src/**/*.ts"],
-  "exec": "tsc && tsc-alias && node dist/index.js",
+  "watch": [
+    "src/**/*.ts",
+    "src/public/**/*.html"
+  ],
+  "exec": "npm run build && node dist/index.js",
   "ext": "ts,js"
 }

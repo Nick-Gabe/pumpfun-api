@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"declaration": true,
 		"target": "ESNext",
-		"module": "ES6",
+		"module": "ES2022",
 		"moduleResolution": "node",
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
@@ -16,12 +16,12 @@
 			"@/*": ["*"]
 		}
 	},
-	"include": ["src/**/*.ts", "src/**/*.d.ts"],
+	"include": ["src/**/*.ts"],
 	"tsc-alias": {
 		"verbose": false,
 		"resolveFullPaths": true,
 		"fileExtensions": {
-			"inputGlob": "{js,jsx,mjs,d.ts}",
+			"inputGlob": "{js,jsx,mjs}",
 			"outputCheck": ["js", "json", "jsx", "mjs"]
 		}
 	}
