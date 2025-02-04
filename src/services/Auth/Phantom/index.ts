@@ -4,7 +4,7 @@ import { rootDirname } from "@/index";
 import path from "node:path";
 import setupFileServer from "@/utils/setupFileServer";
 import AuthService from "..";
-import { BrowserService } from "@/services/Browser";
+import BrowserService from "@/services/Browser";
 
 // biome-ignore lint/complexity/noStaticOnlyClass: This service is going to have more methods in the future;
 export default class PhantomService {

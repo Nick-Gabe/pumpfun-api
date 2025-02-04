@@ -29,7 +29,7 @@ const SUPPORTED_BROWSERS: SupportedBrowsers = {
 	},
 };
 
-export class BrowserService {
+export default class BrowserService {
 	async decideBrowser() {
 		const answer = await inquirer.prompt([
 			{

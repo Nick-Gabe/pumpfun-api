@@ -9,6 +9,7 @@ import AuthService from "./services/Auth";
 export const rootDirname = import.meta.dirname;
 
 if (!process.env.NODEMON) {
+	console.log = () => {};
 	console.debug = () => {};
 }
 
