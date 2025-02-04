@@ -10,10 +10,13 @@ import setupFileServer from "@/utils/setupFileServer";
 // biome-ignore lint/complexity/noStaticOnlyClass: This service is going to have more methods in the future;
 export default class PhantomService {
 	static async connect() {
-		const server = setupFileServer(
+		const loginPagePort = 5500;
+		const loginPageServer = setupFileServer(
 			path.join(rootDirname, "public/phantom-login.html"),
 		);
-		server.listen(5500, () => console.debug("login page listening on 5500"));
+		loginPageServer.listen(loginPagePort, () =>
+			console.debug("login page listening on 5500"),
+		);
 
 		return await new Promise((resolve, reject) => {
 			// @TODO: Support other browsers;
@@ -34,7 +37,7 @@ export default class PhantomService {
 						});
 
 						const page = await browser.newPage();
-						await page.goto("http://localhost:5500");
+						await page.goto(`http://localhost:${loginPagePort}`);
 
 						// @TODO: Retry logic (e.g. message api);
 						const result = await page.evaluate(async () => {
@@ -58,10 +61,12 @@ export default class PhantomService {
 							},
 							json: encodedResult,
 						});
-						server.close(() => console.debug("closing login page server"));
+						loginPageServer.close(() =>
+							console.debug("closing login page server"),
+						);
 						resolve(response.json());
 					} catch (e) {
-						server.close(() =>
+						loginPageServer.close(() =>
 							console.debug("closing login page server due to error:", e),
 						);
 						reject(e);
