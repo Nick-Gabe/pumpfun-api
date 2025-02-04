@@ -15,7 +15,7 @@ export default class PhantomService {
 			path.join(rootDirname, "public/phantom-login.html"),
 		);
 		loginPageServer.listen(loginPagePort, () =>
-			console.debug("login page listening on 5500"),
+			console.debug(`login page listening on ${loginPagePort}`),
 		);
 
 		return await new Promise((resolve, reject) => {
