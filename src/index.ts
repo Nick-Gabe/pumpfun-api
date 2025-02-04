@@ -5,6 +5,10 @@ import UsersService from "@/services/Users";
 import type { AuthenticationMethods } from "@/types";
 import ky from "ky";
 
+// We export it from here to make sure it points to the root folder,
+// and not the current file where it is called;
+export const _dirname = import.meta.dirname;
+
 export default class PumpFun {
 	static baseApiUrl = "https://frontend-api-v3.pump.fun";
 	coins: CoinsService;
