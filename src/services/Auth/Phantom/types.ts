@@ -1,16 +1,6 @@
-type Address = string;
-
-export interface PhantomWindow extends Window {
-	connectPhantomWallet: () => Promise<Address>;
-
-	signMessage: () => Promise<{
-		signature: Record<number, number>;
-		timestamp: number;
-	}>;
-
-	connectAndSign: () => Promise<{
-		address: Address;
-		signature: Record<number, number>;
-		timestamp: number;
-	}>;
+export interface PhantomSignatureEvent {
+	type: "SIGNATURE";
+	address: string;
+	signature: Record<number, number>;
+	timestamp: number;
 }
