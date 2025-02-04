@@ -4,6 +4,7 @@ import RepliesService from "@/services/Replies";
 import UsersService from "@/services/Users";
 import type { AuthenticationMethods } from "@/types";
 import ky from "ky";
+import AuthService from "./services/Auth";
 
 export const rootDirname = import.meta.dirname;
 
@@ -12,11 +13,18 @@ export default class PumpFun {
 	coins: CoinsService;
 	replies: RepliesService;
 	users: UsersService;
+	/**
+	 * @description By default, authentication is handled automatically via the
+	 * `authenticate` method. However, if you need more control, you can manage it
+	 * manually by using the `auth` service.
+	 */
+	auth: AuthService;
 
 	constructor() {
 		this.coins = new CoinsService();
 		this.replies = new RepliesService();
 		this.users = new UsersService();
+		this.auth = new AuthService();
 	}
 
 	async authenticate(via: AuthenticationMethods) {

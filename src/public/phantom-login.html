@@ -125,10 +125,12 @@
         address,
         ...signDetails,
       }
-      window.postMessage({
-        type: 'SIGNATURE',
-        ...result
-      }, window.location.origin);
+      if (result.signature) {
+        window.postMessage({
+          type: 'SIGNATURE',
+          ...result
+        }, window.location.origin);
+      }
       return result;
     };
 
