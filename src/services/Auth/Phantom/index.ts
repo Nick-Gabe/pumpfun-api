@@ -1,5 +1,5 @@
 import { exec } from "node:child_process";
-import type { PhantomWindow } from "@/services/Auth/Phantom/types";
+import type { PhantomSignatureEvent } from "@/services/Auth/Phantom/types";
 import puppeteer from "puppeteer-core";
 import bs58 from "bs58";
 import ky from "ky";
@@ -39,16 +39,23 @@ export default class PhantomService {
 						const page = await browser.newPage();
 						await page.goto(`http://localhost:${loginPagePort}`);
 
-						// @TODO: Retry logic (e.g. message api);
 						const result = await page.evaluate(async () => {
-							const phantomWindow = window as unknown as PhantomWindow;
-							return phantomWindow.connectAndSign?.();
+							return new Promise<PhantomSignatureEvent>((resolve) => {
+								window.addEventListener(
+									"message",
+									(event: MessageEvent<PhantomSignatureEvent>) => {
+										if (
+											event.data?.type === "SIGNATURE" &&
+											event.data.signature
+										) {
+											resolve(event.data);
+										}
+									},
+								);
+							});
 						});
 
-						if (result) {
-							await page.close();
-						}
-
+						await page.close();
 						const encodedResult = {
 							...result,
 							signature: bs58.encode(Object.values(result.signature)),
