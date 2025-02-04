@@ -3,11 +3,21 @@ import type { PhantomWindow } from "@/services/Auth/Phantom/types";
 import puppeteer from "puppeteer-core";
 import bs58 from "bs58";
 import ky from "ky";
-import PumpFun from "@/index";
+import PumpFun, { rootDirname } from "@/index";
+import path from "node:path";
+import setupFileServer from "@/utils/setupFileServer";
 
 // biome-ignore lint/complexity/noStaticOnlyClass: This service is going to have more methods in the future;
 export default class PhantomService {
 	static async connect() {
+		const loginPagePort = 5500;
+		const loginPageServer = setupFileServer(
+			path.join(rootDirname, "public/phantom-login.html"),
+		);
+		loginPageServer.listen(loginPagePort, () =>
+			console.debug(`login page listening on ${loginPagePort}`),
+		);
+
 		return await new Promise((resolve, reject) => {
 			// @TODO: Support other browsers;
 			exec(
@@ -20,41 +30,47 @@ export default class PhantomService {
 
 					await new Promise((r) => setTimeout(r, 1000));
 
-					const browser = await puppeteer.connect({
-						browserURL: "http://localhost:9222",
-						defaultViewport: null,
-					});
+					try {
+						const browser = await puppeteer.connect({
+							browserURL: "http://localhost:9222",
+							defaultViewport: null,
+						});
 
-					const page = await browser.newPage();
-					await page.goto(
-						// @TODO: Find a way to host this file locally (e.g. live-server);
-						"http://127.0.0.1:5500/src/public/phantom-login.html",
-					);
+						const page = await browser.newPage();
+						await page.goto(`http://localhost:${loginPagePort}`);
 
-					// @TODO: Retry logic (e.g. message api);
-					const result = await page.evaluate(async () => {
-						const phantomWindow = window as unknown as PhantomWindow;
-						return phantomWindow.connectAndSign?.();
-					});
+						// @TODO: Retry logic (e.g. message api);
+						const result = await page.evaluate(async () => {
+							const phantomWindow = window as unknown as PhantomWindow;
+							return phantomWindow.connectAndSign?.();
+						});
 
-					if (result) {
-						await page.close();
+						if (result) {
+							await page.close();
+						}
+
+						const encodedResult = {
+							...result,
+							signature: bs58.encode(Object.values(result.signature)),
+						};
+
+						const response = ky.post(`${PumpFun.baseApiUrl}/auth/login`, {
+							headers: {
+								"content-type": "application/json",
+								origin: "https://pump.fun",
+							},
+							json: encodedResult,
+						});
+						loginPageServer.close(() =>
+							console.debug("closing login page server"),
+						);
+						resolve(response.json());
+					} catch (e) {
+						loginPageServer.close(() =>
+							console.debug("closing login page server due to error:", e),
+						);
+						reject(e);
 					}
-
-					const encodedResult = {
-						...result,
-						signature: bs58.encode(Object.values(result.signature)),
-					};
-
-					// @TODO: This should set cookies for next requests;
-					const response = ky.post(`${PumpFun.baseApiUrl}/auth/login`, {
-						headers: {
-							"content-type": "application/json",
-							origin: "https://pump.fun",
-						},
-						json: encodedResult,
-					});
-					resolve(response.json());
 				},
 			);
 		});
