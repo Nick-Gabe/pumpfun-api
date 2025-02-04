@@ -10,7 +10,9 @@ import setupFileServer from "@/utils/setupFileServer";
 // biome-ignore lint/complexity/noStaticOnlyClass: This service is going to have more methods in the future;
 export default class PhantomService {
 	static async connect() {
-		const server = setupFileServer(path.join(rootDirname, "phantom.html"));
+		const server = setupFileServer(
+			path.join(rootDirname, "public/phantom-login.html"),
+		);
 		server.listen(5500, () => console.debug("login page listening on 5500"));
 
 		return await new Promise((resolve, reject) => {
