@@ -2,35 +2,10 @@ import inquirer from "inquirer";
 import { exec } from "node:child_process";
 import os from "node:os";
 import puppeteer, { type Browser } from "puppeteer-core";
-
-type SupportedBrowserId = "google";
-
-type SupportedBrowsers = {
-	[key in SupportedBrowserId]: {
-		label: string;
-		platforms: {
-			[key in NodeJS.Platform]?: string;
-		};
-	};
-};
-
-/**
- * @description Currently we only support chromium-based browsers that are able
- * to open more than a window simultaneously. We plan to support more browsers
- * in the future.
- */
-const SUPPORTED_BROWSERS: SupportedBrowsers = {
-	google: {
-		label: "Google Chrome",
-		platforms: {
-			darwin: "Google Chrome",
-			linux: "google-chrome",
-		},
-	},
-};
+import { SUPPORTED_BROWSERS, type SupportedBrowserId } from "./browsers";
 
 export default class BrowserService {
-	async decideBrowser() {
+	private async decideBrowser() {
 		const answer = await inquirer.prompt([
 			{
 				type: "list",
