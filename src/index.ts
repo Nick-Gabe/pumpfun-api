@@ -8,6 +8,11 @@ import AuthService from "./services/Auth";
 
 export const rootDirname = import.meta.dirname;
 
+if (!process.env.NODEMON) {
+	console.log = () => {};
+	console.debug = () => {};
+}
+
 export default class PumpFun {
 	static baseApiUrl = "https://frontend-api-v3.pump.fun";
 	coins: CoinsService;

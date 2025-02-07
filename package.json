@@ -29,6 +29,7 @@
 	},
 	"dependencies": {
 		"bs58": "^6.0.0",
+		"inquirer": "^12.4.1",
 		"ky": "^1.7.4",
 		"puppeteer-core": "^24.1.1"
 	}
