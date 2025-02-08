@@ -3,21 +3,32 @@ import { exec } from "node:child_process";
 import os from "node:os";
 import puppeteer, { type Browser } from "puppeteer-core";
 import { SUPPORTED_BROWSERS, type SupportedBrowserId } from "./browsers";
+import { localCache } from "@/index";
 
 export default class BrowserService {
 	private async decideBrowser() {
+		const lastChosenBrowser = localCache.get("lastChosenBrowser");
 		const answer = await inquirer.prompt([
 			{
 				type: "list",
 				name: "choice",
 				message: "What browser do you want to use to authenticate?",
-				choices: Object.entries(SUPPORTED_BROWSERS).map(([key, value]) => ({
-					name: value.label,
-					value: key,
-				})),
+				choices: Object.entries(SUPPORTED_BROWSERS)
+					.map(([key, value]) => ({
+						name: value.label,
+						value: key,
+					}))
+					// Moves the last chosen browser to the top
+					.sort((a, b) => {
+						if (a.value === lastChosenBrowser) return -1;
+						if (b.value === lastChosenBrowser) return 1;
+						return 0;
+					}),
 			},
 		]);
-		return answer.choice as SupportedBrowserId;
+		const choice = answer.choice as SupportedBrowserId;
+		localCache.set("lastChosenBrowser", choice);
+		return choice;
 	}
 
 	private getOpenBrowserCommand(browserId: SupportedBrowserId) {
