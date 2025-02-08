@@ -2,11 +2,11 @@ export interface Coin {
 	mint: string;
 	name: string;
 	symbol: string;
-	description: string;
-	image_uri: string;
+	description: string | null;
+	image_uri: string | null;
 	metadata_uri: string;
-	twitter: string;
-	telegram: string;
+	twitter: string | null;
+	telegram: string | null;
 	bonding_curve: string;
 	associated_bonding_curve: string;
 	creator: string;
@@ -16,9 +16,9 @@ export interface Coin {
 	virtual_sol_reserves: number;
 	virtual_token_reserves: number;
 	total_supply: number;
-	website: string;
+	website: string | null;
 	show_name: boolean;
-	king_of_the_hill_timestamp: number;
+	king_of_the_hill_timestamp: number | null;
 	market_cap: number;
 	reply_count: number;
 	last_reply: number;
@@ -40,7 +40,7 @@ export interface LatestCoin extends Coin {
 	last_trade_timestamp: number | null;
 	real_sol_reserves: number;
 	real_token_reserves: number;
-	livestream_ban_expiry: number;
+	livestream_ban_expiry: number | null;
 	is_banned: boolean;
 	initialized: boolean;
 	updated_at: number;
