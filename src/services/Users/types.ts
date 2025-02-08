@@ -1,6 +1,4 @@
-type User = import("models/User").User;
-type DetailedUser = import("models/User").DetailedUser;
-type UserBalance = import("models/User").UserBalance;
+import type { User, DetailedUser, UserBalance } from "@/models/User";
 
 export type SearchUsersMethod = (searchParams: {
 	searchTerm: string;

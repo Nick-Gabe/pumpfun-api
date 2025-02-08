@@ -5,10 +5,42 @@ import UsersService from "@/services/Users";
 import type { AuthenticationMethods } from "@/types";
 import ky from "ky";
 import AuthService from "./services/Auth";
+import { CookieJar } from "tough-cookie";
 
 export const rootDirname = import.meta.dirname;
 
+const cookieJar = new CookieJar();
+
+/**
+ * @description `apiClient` is a ky instance that automatically handles cookies.
+ * This is needed for Pump.fun authentication, as it is cookie-based.
+ */
+export const apiClient = ky.extend({
+	hooks: {
+		beforeRequest: [
+			async (request) => {
+				const url = request.url;
+				const cookies = await cookieJar.getCookies(url);
+				const cookieString = cookies.join("; ");
+				request.headers.set("cookie", cookieString);
+			},
+		],
+		afterResponse: [
+			async (request, options, response) => {
+				const url = request.url;
+				const cookies = response.headers.getSetCookie();
+				if (cookies) {
+					for (const cookie of cookies) {
+						await cookieJar.setCookie(cookie, url);
+					}
+				}
+			},
+		],
+	},
+});
+
 if (!process.env.NODEMON) {
+	// Don't want to show debug logs in production
 	console.log = () => {};
 	console.debug = () => {};
 }
@@ -18,11 +50,6 @@ export default class PumpFun {
 	coins: CoinsService;
 	replies: RepliesService;
 	users: UsersService;
-	/**
-	 * @description By default, authentication is handled automatically via the
-	 * `authenticate` method. However, if you need more control, you can manage it
-	 * manually by using the `auth` service.
-	 */
 	auth: AuthService;
 
 	constructor() {
@@ -35,17 +62,17 @@ export default class PumpFun {
 	async authenticate(via: AuthenticationMethods) {
 		switch (via) {
 			case "phantom":
-				return await PhantomService.connect();
+				await PhantomService.connect();
 		}
 	}
 
 	async health() {
-		const response = await ky.get(`${PumpFun.baseApiUrl}/health`);
+		const response = await apiClient.get(`${PumpFun.baseApiUrl}/health`);
 		return response.json() as Promise<{ status: string }>;
 	}
 
 	async solPrice() {
-		const response = await ky.get(`${PumpFun.baseApiUrl}/sol-price`);
+		const response = await apiClient.get(`${PumpFun.baseApiUrl}/sol-price`);
 		return response.json() as Promise<{ solPrice: number }>;
 	}
 }
