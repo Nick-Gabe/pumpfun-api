@@ -2,10 +2,14 @@
 
 ![API Health](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Ffrontend-api-v3.pump.fun%2Fhealth&query=status&label=API%20Health)
 ![GitHub Repo Size](https://img.shields.io/github/repo-size/nick-gabe/pumpfun-api)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/nick-gabe/pumpfun-api)
 
-## Overview
+<img src="https://pump.fun/icon.png" height="200" align="right" alt="pump.fun logo" />
 
-The **Pump.fun API SDK** provides a set of tools to easily interact with the [Pump.fun](https://pump.fun) API. It allows developers to automate tasks and execute operations such as fetching coin data, managing users, handling replies, and more.
+> The **Pump.fun API SDK** provides a set of tools to easily
+> interact with the [Pump.fun](https://pump.fun) API.
+> It allows developers to automate tasks and execute operations such as
+> fetching coin data, managing users, handling replies, and more.
 
 The SDK is fully typed, ensuring that all methods, parameters, and responses are clearly defined and aligned with Pump.fun's API responses.
 
@@ -23,6 +27,7 @@ To install the SDK in your project, run the following command:
 
 ```bash
 npm install pumpfun-api
+# or yarn, pnpm, etc...
 ```
 
 ## Getting Started
