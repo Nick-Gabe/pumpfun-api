@@ -1,6 +1,4 @@
-type Reply = import("models/Reply").Reply;
-type CoinReply = import("models/Reply").CoinReply;
-type UserReply = import("models/Reply").UserReply;
+import type { Reply, CoinReply, UserReply } from "@/models/Reply";
 
 export type GetRepliesMethod = (searchParams: {
 	/**

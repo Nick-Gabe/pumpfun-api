@@ -3,6 +3,6 @@
     "src/**/*.ts",
     "src/public/**/*.html"
   ],
-  "exec": "NODEMON=true npm run build && node dist/index.js",
+  "exec": "npm run build && node dist/index.js",
   "ext": "ts,js"
 }

@@ -1,7 +1,9 @@
-type Coin = import("models/Coin").Coin;
-type KingOfTheHill = import("models/Coin").KingOfTheHill;
-type LatestCoin = import("models/Coin").LatestCoin;
-type CoinCandlestick = import("models/Coin").CoinCandlestick;
+import type {
+	KingOfTheHill,
+	Coin,
+	LatestCoin,
+	CoinCandlestick,
+} from "@/models/Coin";
 
 export type KingOfTheHillMethod = (searchParams?: {
 	includeNsfw?: boolean;
