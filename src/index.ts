@@ -8,8 +8,11 @@ import AuthService from "./services/Auth";
 import { CookieJar } from "tough-cookie";
 import BookmarksService from "./services/Bookmarks";
 import { MetasService } from "./services/Metas";
+import { LocalCache } from "./utils/localCache";
 
 export const rootDirname = import.meta.dirname;
+
+export const localCache = new LocalCache("user.json");
 
 const cookieJar = new CookieJar();
 
@@ -43,7 +46,6 @@ export const apiClient = ky.extend({
 
 if (!process.env.NODEMON) {
 	// Don't want to show debug logs in production
-	console.log = () => {};
 	console.debug = () => {};
 }
 
@@ -65,11 +67,30 @@ export default class PumpFun {
 		this.metas = new MetasService();
 	}
 
-	async authenticate(via: AuthenticationMethods) {
-		switch (via) {
-			case "phantom":
-				await PhantomService.connect();
+	async authenticate(provider: AuthenticationMethods) {
+		let cachedCredentials = localCache.get("cachedCredentials");
+		const lastAuthProvider = localCache.get("lastAuthProvider");
+
+		if (lastAuthProvider === provider && cachedCredentials) {
+			try {
+				await this.auth.login(cachedCredentials);
+				return;
+			} catch (e) {
+				console.log(
+					"Cached credentials failed or expired, requesting manual login...",
+				);
+				localCache.delete("cachedCredentials");
+			}
 		}
+
+		switch (provider) {
+			case "phantom":
+				cachedCredentials = await PhantomService.connect();
+				break;
+		}
+
+		localCache.set("cachedCredentials", cachedCredentials);
+		localCache.set("lastAuthProvider", provider);
 	}
 
 	async health() {
