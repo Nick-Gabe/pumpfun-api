@@ -45,6 +45,34 @@ export default class BrowserService {
 		}
 	}
 
+	private async checkBrowserConnection() {
+		return new Promise((resolve, reject) => {
+			exec("curl http://localhost:9222/json", (err, stdout) => {
+				if (err) {
+					reject(err);
+					return;
+				}
+				resolve(stdout);
+			});
+		});
+	}
+
+	private async waitForBrowserConnectionReady(maxRetries = 10, delayMs = 1000) {
+		let retries = 0;
+		while (retries < maxRetries) {
+			try {
+				await this.checkBrowserConnection();
+				return true;
+			} catch (error) {
+				retries++;
+				if (retries >= maxRetries) {
+					throw new Error("Browser connection failed after multiple attempts");
+				}
+				await new Promise((resolve) => setTimeout(resolve, delayMs));
+			}
+		}
+	}
+
 	async runOnBrowser(fn: (browser: Browser) => unknown) {
 		const selectedBrowserId = await this.decideBrowser();
 		return await new Promise((resolve, reject) => {
@@ -53,7 +81,7 @@ export default class BrowserService {
 					reject(`Error launching ${selectedBrowserId}: ${err}`);
 					return;
 				}
-				await new Promise((r) => setTimeout(r, 1000));
+				await this.waitForBrowserConnectionReady();
 				const puppeteerBrowser = await puppeteer.connect({
 					browserURL: "http://localhost:9222",
 					defaultViewport: null,
