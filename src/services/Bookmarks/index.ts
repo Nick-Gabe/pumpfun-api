@@ -4,7 +4,6 @@ import type {
 	GetBookmarksMethod,
 	GetDefaultBookmarkMethod,
 } from "./types";
-import type { Bookmark } from "@/models/Bookmark";
 
 export default class BookmarksService {
 	private namespace = "/bookmarks";

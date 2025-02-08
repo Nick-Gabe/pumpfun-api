@@ -20,6 +20,9 @@
 		"enabled": true,
 		"rules": {
 			"recommended": true,
+			"correctness": {
+				"noUnusedImports": "error"
+			},
 			"style": {
 				"noNonNullAssertion": "off",
 				"noUnusedTemplateLiteral": "error"
