@@ -1,4 +1,4 @@
-export type SupportedBrowserId = "google" | "brave";
+export type SupportedBrowserId = "google" | "brave" | "edge";
 
 export type SupportedBrowsers = {
 	[key in SupportedBrowserId]: {
@@ -32,6 +32,14 @@ export const SUPPORTED_BROWSERS: SupportedBrowsers = {
 			linux: "brave-browser",
 			darwin: "Brave Browser",
 			win32: "brave",
+		},
+	},
+	edge: {
+		label: "Microsoft Edge",
+		platforms: {
+			linux: "microsoft-edge",
+			darwin: "Microsoft Edge",
+			win32: "msedge",
 		},
 	},
 };
