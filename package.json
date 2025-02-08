@@ -17,8 +17,31 @@
 		"node": ">=20.11"
 	},
 	"packageManager": "pnpm@8.14.1",
-	"keywords": [],
-	"author": "",
+	"keywords": [
+		"crypto",
+		"pumpfun",
+		"pump",
+		"api",
+		"sdk",
+		"pump.fun",
+		"currency",
+		"trades",
+		"memes",
+		"coins",
+		"trading",
+		"automation",
+		"bot"
+	],
+	"author": "Nick-Gabe",
+	"bugs": {
+		"url": "https://github.com/Nick-Gabe/pumpfun-api/issues"
+	},
+	"homepage": "https://github.com/Nick-Gabe/pumpfun-api#readme",
+	"repository": {
+		"type": "github",
+		"url": "https://github.com/Nick-Gabe/pumpfun-api"
+	},
+	"dist": {},
 	"license": "ISC",
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
