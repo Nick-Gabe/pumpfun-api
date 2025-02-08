@@ -6,6 +6,7 @@ import type { AuthenticationMethods } from "@/types";
 import ky from "ky";
 import AuthService from "./services/Auth";
 import { CookieJar } from "tough-cookie";
+import BookmarksService from "./services/Bookmarks";
 
 export const rootDirname = import.meta.dirname;
 
@@ -51,12 +52,14 @@ export default class PumpFun {
 	replies: RepliesService;
 	users: UsersService;
 	auth: AuthService;
+	bookmarks: BookmarksService;
 
 	constructor() {
 		this.coins = new CoinsService();
 		this.replies = new RepliesService();
 		this.users = new UsersService();
 		this.auth = new AuthService();
+		this.bookmarks = new BookmarksService();
 	}
 
 	async authenticate(via: AuthenticationMethods) {
