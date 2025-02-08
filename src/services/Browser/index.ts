@@ -27,6 +27,8 @@ export default class BrowserService {
 				return `open -a '${browserConfig.platforms.darwin}' --args --remote-debugging-port=9222`;
 			case "linux":
 				return `${browserConfig.platforms.linux} --remote-debugging-port=9222`;
+			case "win32":
+				return `start ${browserConfig.platforms.win32} --remote-debugging-port=9222`;
 			default:
 				throw new Error("Unsupported platform");
 		}
