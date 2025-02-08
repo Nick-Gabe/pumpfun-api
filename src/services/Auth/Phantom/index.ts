@@ -52,7 +52,7 @@ export default class PhantomService {
 				loginPageServer.close(() =>
 					console.debug("closing login page server due to error:", e),
 				);
-				return e;
+				throw e;
 			}
 		})) as Promise<PhantomLoginBody>;
 	}

@@ -1,4 +1,4 @@
-export type SupportedBrowserId = "google";
+export type SupportedBrowserId = "google" | "brave" | "edge" | "opera";
 
 export type SupportedBrowsers = {
 	[key in SupportedBrowserId]: {
@@ -10,11 +10,11 @@ export type SupportedBrowsers = {
 };
 
 /**
- * @description Currently we only support chromium-based browsers that are able
- * to open more than a window simultaneously. We plan to support more browsers
- * in the future.
+ * @description Currently we only support chromium-based browsers because of a
+ * puppeteer limitation. And other alternatives such as `playwright` are not
+ * able to use extensions, so they don't work either.
  *
- * Also feel free to add other platforms, you just need to check what's the
+ * Feel free to add other platforms, you just need to check what's the
  * keyword to open the browser.
  */
 export const SUPPORTED_BROWSERS: SupportedBrowsers = {
@@ -23,6 +23,31 @@ export const SUPPORTED_BROWSERS: SupportedBrowsers = {
 		platforms: {
 			linux: "google-chrome",
 			darwin: "Google Chrome",
+			win32: "chrome",
+		},
+	},
+	brave: {
+		label: "Brave",
+		platforms: {
+			linux: "brave-browser",
+			darwin: "Brave Browser",
+			win32: "brave",
+		},
+	},
+	edge: {
+		label: "Microsoft Edge",
+		platforms: {
+			linux: "microsoft-edge",
+			darwin: "Microsoft Edge",
+			win32: "msedge",
+		},
+	},
+	opera: {
+		label: "Opera",
+		platforms: {
+			linux: "opera",
+			darwin: "Opera",
+			win32: "opera",
 		},
 	},
 };
