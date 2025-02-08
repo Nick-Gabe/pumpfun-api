@@ -1,6 +1,6 @@
 import type { Profile } from "@/models/Profile";
 
-interface PhantomLoginBody {
+export interface PhantomLoginBody {
 	address: string;
 	signature: string;
 	timestamp: number;
