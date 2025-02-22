@@ -9,8 +9,10 @@ import { CookieJar } from "tough-cookie";
 import BookmarksService from "./services/Bookmarks";
 import { MetasService } from "./services/Metas";
 import { LocalCache } from "./utils/localCache";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
 
-export const rootDirname = import.meta.dirname;
+export const rootDirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const localCache = new LocalCache("user.json");
 

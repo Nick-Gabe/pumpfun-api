@@ -1,6 +1,6 @@
 {
 	"name": "pumpfun-api",
-	"version": "1.0.1",
+	"version": "1.0.4",
 	"description": "A package for interacting with the Pump.Fun API",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -9,13 +9,11 @@
 		"start": "node dist/index.js",
 		"dev": "cross-env NODEMON=true nodemon",
 		"build": "tsc && tsc-alias && npm run copy-files",
+		"publish": "npm build && npm publish",
 		"format": "pnpm biome format --write src/**/*",
 		"lint": "pnpm biome lint --write src/**/*",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"copy-files": "cp -r src/public dist"
-	},
-	"engines": {
-		"node": ">=20.11"
 	},
 	"packageManager": "pnpm@8.14.1",
 	"keywords": [
@@ -31,7 +29,9 @@
 		"coins",
 		"trading",
 		"automation",
-		"bot"
+		"bot",
+		"cli",
+		"backend"
 	],
 	"author": "Nick-Gabe",
 	"bugs": {
