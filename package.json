@@ -1,7 +1,7 @@
 {
 	"name": "pumpfun-api",
-	"version": "1.0.0",
-	"description": "",
+	"version": "1.0.1",
+	"description": "A package for interacting with the Pump.Fun API",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"type": "module",
@@ -42,7 +42,6 @@
 		"type": "github",
 		"url": "https://github.com/Nick-Gabe/pumpfun-api"
 	},
-	"dist": {},
 	"license": "ISC",
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",

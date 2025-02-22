@@ -21,7 +21,7 @@
 		"verbose": false,
 		"resolveFullPaths": true,
 		"fileExtensions": {
-			"inputGlob": "{js,jsx,mjs}",
+			"inputGlob": "{js,jsx,mjs,d.ts}",
 			"outputCheck": ["js", "json", "jsx", "mjs"]
 		}
 	}
